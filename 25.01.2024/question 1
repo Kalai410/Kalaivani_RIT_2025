@@ -1,52 +1,34 @@
-# Cities on a map are connected by a number of roads. The number of roads between each city is in an array and city  is the starting location. The number of roads from city  to city  is the first value in the array, from city  to city  is the second, and so on.
+#Consider two points,  and . We consider the inversion or point reflection, , of point  across point  to be a  rotation of point  around .
 
-# How many paths are there from city  to the last city in the list, modulo ?
-
-# Example
-
-
-# There are  roads to city ,  roads to city  and  roads to city . The total number of roads is .
-
-# Note
-# Pass all the towns Ti for i=1 to n-1 in numerical order to reach Tn.
+# Given  sets of points  and , find  for each pair of points and print two space-separated integers denoting the respective values of  and  on a new line.
 
 # Function Description
 
-# Complete the connectingTowns function in the editor below.
+# Complete the findPoint function in the editor below.
 
-# connectingTowns has the following parameters:
+# findPoint has the following parameters:
 
-# int n: the number of towns
-# int routes[n-1]: the number of routes between towns
+# int px, py, qx, qy: x and y coordinates for points  and 
 # Returns
 
-# int: the total number of routes, modulo 1234567.
+# int[2]: x and y coordinates of the reflected point 
 # Input Format
-# The first line contains an integer T, T test-cases follow.
 
-# Each test-case has 2 lines.
-# The first line contains an integer N (the number of towns).
-# The second line contains N - 1 space separated integers where the ith integer denotes the number of routes, Ni, from the town Ti to Ti+1
+# The first line contains an integer, , denoting the number of sets of points.
+# Each of the  subsequent lines contains four space-separated integers that describe the respective values of , , , and  defining points  and .
 
 # Constraints
-# 1 <= T<=1000
-# 2< N <=100
-# 1 <= routes[i] <=1000
 
 # Sample Input
 
 # 2
-# 3
-# 1 3
-# 4
-# 2 2 2
+# 0 0 1 1
+# 1 1 2 2
 # Sample Output
 
-# 3
-# 8
+# 2 2
+# 3 3
 #logic 1
-#!/bin/python3
-
 import math
 import os
 import random
@@ -54,35 +36,41 @@ import re
 import sys
 
 #
-# Complete the 'connectingTowns' function below.
+# Complete the 'findPoint' function below.
 #
-# The function is expected to return an INTEGER.
+# The function is expected to return an INTEGER_ARRAY.
 # The function accepts following parameters:
-#  1. INTEGER n
-#  2. INTEGER_ARRAY routes
+#  1. INTEGER px
+#  2. INTEGER py
+#  3. INTEGER qx
+#  4. INTEGER qy
 #
 
-def connectingTowns(n, routes):
-    total_routes = 1
-    
-    for route in routes:
-        total_routes *= route
-        total_routes %= 1234567
+def findPoint(px, py, qx, qy):
+    rx = 2 * qx - px
+    ry = 2 * qy - py
+    return [rx, ry]
 
-    return total_routes
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    t = int(input().strip())
+    n = int(input().strip())
 
-    for t_itr in range(t):
-        n = int(input().strip())
+    for n_itr in range(n):
+        first_multiple_input = input().rstrip().split()
 
-        routes = list(map(int, input().rstrip().split()))
+        px = int(first_multiple_input[0])
 
-        result = connectingTowns(n, routes)
+        py = int(first_multiple_input[1])
 
-        fptr.write(str(result) + '\n')
+        qx = int(first_multiple_input[2])
+
+        qy = int(first_multiple_input[3])
+
+        result = findPoint(px, py, qx, qy)
+
+        fptr.write(' '.join(map(str, result)))
+        fptr.write('\n')
 
     fptr.close()
